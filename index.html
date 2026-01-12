@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LANO | The Royal Ticket</title>
+  <title>LANO | Royal Identity</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,9 +12,10 @@
   <style>
     :root {
       --gold-foil: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-      --royal-green: #0d261d;
-      --paper-color: #f2e6d0;
-      --vintage-red: #962828;
+      --lano-burgundy: #6f1d1b;        /* أحمر غامق */
+      --lano-burgundy-2: #3b0f10;      /* أغمق للخلفيات */
+      --paper-color: #f2e6d0;          /* بيج */
+      --vintage-red: #8b1f24;          /* خطوط/تفاصيل */
       --ink: #1b1b1b;
     }
 
@@ -23,7 +24,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at center, #1a3a2f 0%, #050a08 100%);
+      background: radial-gradient(circle at center, #2a0a0b 0%, #070102 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -33,40 +34,50 @@
       color: var(--paper-color);
     }
 
-    /* شاشة الدخول */
+    /* شاشة الإصدار */
     #setup {
       position: absolute;
       z-index: 100;
       text-align: center;
-      background: rgba(13, 38, 29, 0.92);
-      padding: 40px 45px;
+      background: rgba(59, 15, 16, 0.92);
+      padding: 44px 46px;
       border: 1px solid #bf953f;
       border-radius: 2px;
       box-shadow: 0 0 100px rgba(0,0,0,0.8);
       transition: 0.8s;
-      width: min(520px, calc(100% - 28px));
+      width: min(540px, calc(100% - 28px));
+      backdrop-filter: blur(6px);
     }
     .fade-out { opacity: 0; pointer-events: none; transform: scale(1.05); }
+
+    .gold-foil-text {
+      background: var(--gold-foil);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Cinzel';
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
 
     .input-style {
       background: none;
       border: none;
       border-bottom: 2px solid #bf953f;
       color: #f2e6d0;
-      font-size: 28px;
+      font-size: 30px;
       font-family: 'Great Vibes', cursive;
       text-align: center;
       margin: 22px 0 10px;
-      width: min(340px, 85%);
+      width: min(360px, 85%);
       outline: none;
     }
 
     .hint {
-      margin-top: 8px;
+      margin-top: 10px;
       font-size: 13px;
-      color: rgba(242,230,208,0.7);
-      letter-spacing: 0.5px;
-      line-height: 1.7;
+      color: rgba(242,230,208,0.78);
+      letter-spacing: 0.4px;
+      line-height: 1.8;
     }
 
     .row-actions{
@@ -77,10 +88,23 @@
       flex-wrap:wrap;
     }
 
+    .btn {
+      background: none;
+      border: 1px solid #bf953f;
+      color: #bf953f;
+      padding: 12px 34px;
+      cursor: pointer;
+      font-family: 'Cinzel';
+      font-size: 12px;
+      transition: 0.25s;
+      letter-spacing: 2px;
+    }
+    .btn:hover { background: #bf953f; color: #120607; transform: translateY(-1px); }
+
     /* --- التذكرة --- */
     .ticket-outer {
       width: 90%;
-      max-width: 850px;
+      max-width: 880px;
       aspect-ratio: 2.1 / 1;
       position: relative;
       opacity: 0;
@@ -94,7 +118,7 @@
       height: 100%;
       background-color: var(--paper-color);
       background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-      border-radius: 8px;
+      border-radius: 10px;
       box-shadow: 0 40px 80px rgba(0,0,0,0.7);
       display: flex;
       position: relative;
@@ -112,15 +136,15 @@
         45deg,
         var(--vintage-red) 0, var(--vintage-red) 15px,
         var(--paper-color) 15px, var(--paper-color) 25px,
-        var(--royal-green) 25px, var(--royal-green) 40px
+        #2a0a0b 25px, #2a0a0b 40px
       ) 40;
       z-index: 5;
       pointer-events: none;
     }
 
     .ticket-stub {
-      width: 100px;
-      background: var(--royal-green);
+      width: 110px;
+      background: linear-gradient(180deg, var(--lano-burgundy) 0%, #2a0a0b 100%);
       color: var(--paper-color);
       display: flex;
       align-items: center;
@@ -129,7 +153,7 @@
       font-size: 12px;
       letter-spacing: 4px;
       writing-mode: vertical-lr;
-      border-left: 3px dashed rgba(255,255,255,0.1);
+      border-left: 3px dashed rgba(255,255,255,0.12);
       z-index: 6;
       text-align:center;
       padding: 10px 0;
@@ -137,22 +161,13 @@
 
     .ticket-main {
       flex: 1;
-      padding: 28px 38px;
+      padding: 28px 40px;
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
       z-index: 4;
-    }
-
-    .gold-foil-text {
-      background: var(--gold-foil);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-family: 'Cinzel';
-      font-weight: 900;
-      letter-spacing: 3px;
     }
 
     .header-box { text-align: center; }
@@ -167,11 +182,11 @@
     }
 
     .center-content { text-align: center; }
-    .center-content span { font-family: 'Cinzel'; font-size: 10px; color: var(--royal-green); opacity: 0.65; }
+    .center-content span { font-family: 'Cinzel'; font-size: 10px; color: #2a0a0b; opacity: 0.65; }
     .name-display {
       font-family: 'Great Vibes', cursive;
       font-size: 64px;
-      color: var(--royal-green);
+      color: #2a0a0b;
       margin: 4px 0 2px;
       filter: drop-shadow(1px 1px 0px white);
     }
@@ -184,16 +199,39 @@
       margin-top: 6px;
     }
     .chip{
-      border:1px solid rgba(13,38,29,0.25);
+      border:1px solid rgba(42,10,11,0.18);
       background: rgba(255,255,255,0.55);
       padding: 6px 10px;
       border-radius: 999px;
       font-family: 'Cinzel';
       font-size: 10px;
       letter-spacing: 1px;
-      color: rgba(13,38,29,0.9);
+      color: rgba(42,10,11,0.85);
     }
-    .chip b{ color: var(--royal-green); }
+    .chip b{ color: #2a0a0b; }
+
+    /* ختم بصري */
+    .stamp-track{
+      margin-top: 10px;
+      display:flex;
+      gap:7px;
+      justify-content:center;
+      flex-wrap:wrap;
+      max-width: 420px;
+      padding: 0 8px;
+    }
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(42,10,11,0.28);
+      background: rgba(255,255,255,0.45);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+    }
+    .dot.filled{
+      background: linear-gradient(135deg, rgba(191,149,63,0.95), rgba(252,246,186,0.95));
+      border-color: rgba(0,0,0,0.25);
+    }
 
     .footer-row {
       width: 100%;
@@ -209,14 +247,14 @@
       text-align: center;
       cursor: pointer;
       padding: 8px 10px;
-      transition: 0.3s;
+      transition: 0.25s;
       user-select: none;
     }
     .barcode-section:hover { transform: translateY(-4px); }
 
     .barcode-img {
-      width: 180px;
-      height: 45px;
+      width: 190px;
+      height: 46px;
       background: #000;
       mask: repeating-linear-gradient(90deg, #000 0, #000 2px, transparent 2px, transparent 6px);
       -webkit-mask: repeating-linear-gradient(90deg, #000 0, #000 2px, transparent 2px, transparent 6px);
@@ -235,11 +273,24 @@
       color: rgba(0,0,0,0.55);
     }
 
+    .mini-btn{
+      background:none;
+      border: 1px solid rgba(191,149,63,0.7);
+      color: rgba(42,10,11,0.85);
+      padding: 6px 10px;
+      cursor:pointer;
+      font-family:'Cinzel';
+      font-size:9px;
+      letter-spacing: 1px;
+      transition: .2s;
+    }
+    .mini-btn:hover{ background: rgba(191,149,63,0.18); transform: translateY(-1px); }
+
     /* --- طبقة الكشف --- */
     .reveal-overlay {
       position: absolute;
       inset: 0;
-      background: var(--royal-green);
+      background: radial-gradient(circle at top, rgba(111,29,27,0.98) 0%, rgba(42,10,11,0.98) 70%);
       z-index: 20;
       transform: translateY(100%);
       transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
@@ -254,15 +305,16 @@
     }
     .ticket-outer.opened .reveal-overlay { transform: translateY(0); }
 
-    .msg-ar { font-size: 22px; line-height: 1.9; margin: 0 0 14px; font-weight: 700; }
-    .msg-en { font-family: 'Playfair Display'; font-size: 14px; color: #bf953f; font-style: italic; margin: 0; }
-
     .panel{
-      border: 1px solid rgba(191,149,63,0.9);
+      border: 1px solid rgba(191,149,63,0.92);
       padding: 26px 24px;
       width: 100%;
-      background: rgba(0,0,0,0.12);
+      background: rgba(0,0,0,0.14);
+      backdrop-filter: blur(4px);
     }
+
+    .msg-ar { font-size: 22px; line-height: 1.9; margin: 0 0 14px; font-weight: 700; }
+    .msg-en { font-family: 'Playfair Display'; font-size: 14px; color: #fcf6ba; font-style: italic; margin: 0; opacity: 0.95; }
 
     .kpi{
       display:grid;
@@ -272,15 +324,15 @@
       text-align: center;
     }
     .kpi .box{
-      border: 1px solid rgba(242,230,208,0.2);
+      border: 1px solid rgba(242,230,208,0.22);
       padding: 10px 8px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.06);
     }
     .kpi .label{
       font-family: 'Cinzel';
       letter-spacing: 2px;
       font-size: 9px;
-      color: rgba(242,230,208,0.8);
+      color: rgba(242,230,208,0.85);
     }
     .kpi .val{
       font-family: 'Cinzel';
@@ -295,15 +347,16 @@
       border-top: 1px dashed rgba(242,230,208,0.25);
       padding-top: 12px;
       font-size: 14px;
-      line-height: 1.8;
-      color: rgba(242,230,208,0.95);
+      line-height: 1.9;
+      color: rgba(242,230,208,0.98);
+      white-space: pre-line;
     }
     .code{
       margin-top: 12px;
       font-family: 'Cinzel';
       letter-spacing: 3px;
       font-size: 12px;
-      color: rgba(252,246,186,0.95);
+      color: rgba(252,246,186,0.98);
       user-select: all;
     }
 
@@ -316,14 +369,15 @@
       cursor: pointer;
       font-family: 'Cinzel';
       font-size: 10px;
-      transition: 0.3s;
+      transition: 0.25s;
+      letter-spacing: 2px;
     }
-    .close-btn:hover { background: #bf953f; color: #000; }
+    .close-btn:hover { background: #bf953f; color: #120607; }
 
     /* ختم */
     .seal-gold {
-      width: 80px;
-      height: 80px;
+      width: 82px;
+      height: 82px;
       position: absolute;
       top: 50%;
       right: 15%;
@@ -337,37 +391,37 @@
       font-family: 'Cinzel';
       font-weight: 900;
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      opacity: 0.85;
+      opacity: 0.9;
       pointer-events: none;
+      color:#120607;
     }
 
-    /* موبايل */
     @media (max-width: 720px){
       .ticket-main{ padding: 20px 18px; }
       .name-display{ font-size: 52px; }
       .header-box h1{ font-size: 30px; }
-      .ticket-stub{ width: 86px; font-size: 11px; }
-      .barcode-img{ width: 160px; }
+      .ticket-stub{ width: 92px; font-size: 11px; }
+      .barcode-img{ width: 170px; }
       .kpi{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Setup (only first time) -->
+  <!-- Setup -->
   <div id="setup" aria-hidden="true">
-    <h2 class="gold-foil-text" style="font-size: 30px; margin:0;">ROYAL IDENTITY</h2>
-    <p style="color: rgba(242,230,208,0.75); letter-spacing: 2px; margin: 10px 0 0;">AUTHENTICATING YOUR PRESENCE…</p>
+    <h2 class="gold-foil-text" style="font-size: 30px; margin:0;">LANO ROYAL ID</h2>
+    <p style="color: rgba(242,230,208,0.78); letter-spacing: 2px; margin: 10px 0 0;">AUTHENTICATING YOUR ENTRY…</p>
 
     <input type="text" id="userName" class="input-style" placeholder="Your Name" maxlength="16">
+
     <div class="hint">
-      هذه ليست بطاقة خصم… هذه <b>هويتك</b> في المكان. <br>
-      بعد إصدارها، أي قراءة للـNFC بتظهر تذكرتك مباشرة.
+      المس البطاقة… ثم اكتب اسمك مرة واحدة فقط. <br>
+      بعد ذلك، أي قراءة للـNFC ستعرض <b>هويتك</b> مباشرة.
     </div>
 
     <div class="row-actions">
-      <button class="close-btn" style="font-size: 13px; padding: 12px 34px;" onclick="issueIdentity()">إصدار الهوية</button>
-      <button class="close-btn" style="font-size: 13px; padding: 12px 22px; opacity:.9;" onclick="demoGuest()">دخول كضيف</button>
+      <button class="btn" onclick="issueIdentity()">إصدار الهوية</button>
     </div>
   </div>
 
@@ -376,42 +430,44 @@
     <div class="ticket-body">
 
       <div class="ticket-stub" id="stubText">
-        № 7721-09-2025 • ADMIT ONE
+        № 7721-09-2026 • ADMIT ONE
       </div>
 
       <div class="ticket-main">
         <div class="header-box">
           <h1 class="gold-foil-text" id="headline">ROYAL MEMBER</h1>
-          <p id="subhead">GRAND WINTER GALA 2025</p>
+          <p id="subhead">LANO WINTER EDITION</p>
         </div>
 
         <div class="center-content">
           <span>EXCLUSIVE ENTRY GRANTED TO</span>
           <div class="name-display" id="displayName">Guest</div>
-          <div style="height: 1px; width: 110px; background: #bf953f; margin: 10px auto;"></div>
+          <div style="height: 1px; width: 120px; background: #bf953f; margin: 10px auto;"></div>
 
           <div class="meta-row">
             <div class="chip">VISITS: <b id="visitsChip">0</b></div>
             <div class="chip">STAMPS: <b id="stampsChip">0</b>/12</div>
             <div class="chip">TIER: <b id="tierChip">BRONZE</b></div>
           </div>
+
+          <!-- 12 Visual Stamps -->
+          <div class="stamp-track" id="stampTrack" aria-label="Stamps"></div>
         </div>
 
         <div class="footer-row">
-          <div style="text-align: left; color: #444; font-size: 11px; font-family: 'Cinzel'; min-width: 180px;">
-            REF: <span id="refCode">ROYAL-882</span><br>
+          <div style="text-align: left; color: #3a2d2d; font-size: 11px; font-family: 'Cinzel'; min-width: 190px;">
+            REF: <span id="refCode">LANO-ROYAL</span><br>
             STATUS: <span id="statusText">CONFIRMED</span>
             <div class="mini-actions" style="margin-top:8px;">
               <span style="opacity:.9;">Last:</span> <span id="lastSeen">—</span>
-              <button class="close-btn" style="margin:0; padding:6px 10px; font-size:9px;" onclick="editName()">تغيير الاسم</button>
-              <button class="close-btn" style="margin:0; padding:6px 10px; font-size:9px; border-color: rgba(191,149,63,0.7);" onclick="resetIdentity()">إعادة تعيين</button>
+              <button class="mini-btn" onclick="editName()">تغيير الاسم</button>
             </div>
           </div>
 
           <div class="barcode-section" onclick="openTicket()">
             <div class="barcode-img"></div>
             <div style="font-size: 9px; margin-top: 6px; color: var(--vintage-red); font-weight: bold; letter-spacing: 1px;">
-              CLICK BARCODE TO REVEAL TODAY’S ROYAL SEAL
+              TAP TO REVEAL TODAY’S ROYAL SEAL
             </div>
           </div>
         </div>
@@ -443,7 +499,7 @@
           <div class="reward" id="rewardBox" style="display:none;"></div>
           <div class="code" id="cashierCode" title="انسخه للكاشير"></div>
 
-          <div style="font-family: 'Great Vibes'; font-size: 34px; color: #bf953f; margin-top: 14px;">Lano</div>
+          <div style="font-family: 'Great Vibes'; font-size: 34px; color: #fcf6ba; margin-top: 14px;">LANO</div>
 
           <button class="close-btn" onclick="closeTicket()">إغلاق</button>
         </div>
@@ -454,20 +510,42 @@
 
 <script>
   // =========================
-  // Royal Identity (LocalStorage)
+  // LANO Royal Identity (LocalStorage)
   // =========================
-  const STORAGE_KEY = "lano_royal_identity_v1";
-  const VISIT_COOLDOWN_HOURS = 4; // لا يزيد الزيارة إلا بعد 4 ساعات (تقدر تغيّرها)
+  const STORAGE_KEY = "lano_royal_identity_v3"; // نسخة جديدة
+  const VISIT_COOLDOWN_HOURS = 4;               // لا يزيد الزيارة إلا بعد 4 ساعات
+  const NAME_CHANGE_COOLDOWN_DAYS = 30;         // تغيير الاسم مرة كل 30 يوم (تطوير)
+  const STAMP_CYCLE = 12;
+
+  // ---- Visual stamps init
+  const stampTrackEl = document.getElementById("stampTrack");
+  function buildStampDots(){
+    stampTrackEl.innerHTML = "";
+    for(let i=0;i<STAMP_CYCLE;i++){
+      const d = document.createElement("div");
+      d.className = "dot";
+      stampTrackEl.appendChild(d);
+    }
+  }
+  buildStampDots();
+
+  function fillStampDots(stamps){
+    const dots = stampTrackEl.querySelectorAll(".dot");
+    dots.forEach((el, idx) => {
+      if(idx < stamps) el.classList.add("filled");
+      else el.classList.remove("filled");
+    });
+  }
 
   // رسائل حسب مراحل الزيارة
   function stageMessages(visits){
     if (visits <= 1) return {
-      ar: "مرحبًا بك… اليوم بدأت هويتك الملكية معنا ✨",
-      en: "Welcome… your Royal Identity begins today ✨"
+      ar: "مرحبًا بك في LANO… اليوم بدأت هويتك الملكية معنا ✨",
+      en: "Welcome to LANO… your royal identity begins today ✨"
     };
     if (visits <= 3) return {
-      ar: "وجودك صار له أثر… نحن نلاحظ تفاصيل رجعتك 🤍",
-      en: "Your presence leaves a trace… we notice your return 🤍"
+      ar: "رجعتك مو عادية… أنت من الناس اللي نحب نشوفهم 🤍",
+      en: "Your return isn’t ordinary… we love seeing you here 🤍"
     };
     if (visits <= 6) return {
       ar: "أنت الآن من الوجوه المألوفة… أهلاً بك في دائرتنا الخاصة 👑",
@@ -478,33 +556,33 @@
       en: "Your loyalty shows… not luck, a beautiful habit ✨"
     };
     return {
-      ar: "أنت من أهل المكان… تذكرتك ما عادت تذكرة، صارت هوية 👑",
-      en: "You belong here… this ticket is no longer a ticket, it’s an identity 👑"
+      ar: "أنت من أهل LANO… تذكرتك لم تعد تذكرة، صارت هوية 👑",
+      en: "You belong to LANO… this is no longer a ticket, it’s an identity 👑"
     };
   }
 
-  // مكافآت على محطات (قابلة للتعديل حسب هامش الربح)
+  // مكافآت على محطات (عدّلها حسب هامش الربح)
   function milestoneReward(visits){
     const map = {
       3:  { ar: "🎖️ مكافأة: إضافة (صوص/توبنق) مجانًا اليوم.", en: "🎖️ Reward: a free add-on today." },
       6:  { ar: "👑 مكافأة: Upgrade حجم/إضافة خاصة (حسب المتاح).", en: "👑 Reward: an upgrade (subject to availability)." },
       9:  { ar: "✨ مكافأة: حلوى صغيرة أو مشروب صغير (حسب المتاح).", en: "✨ Reward: a small dessert/drink (subject to availability)." },
-      12: { ar: "🏆 مكافأة: امتياز ملكي — منتج مجاني محدد + ختم إعادة التعيين.", en: "🏆 Reward: royal privilege — a selected free item + reset stamp." }
+      12: { ar: "🏆 مكافأة: امتياز ملكي — مكافأة خاصة + بدء دورة أختام جديدة.", en: "🏆 Reward: royal privilege — special reward + new stamp cycle." }
     };
     return map[visits] || null;
   }
 
-  // Lucky Winner probability (يزيد خارج الذروة كمثال)
+  // Lucky Winner probability
   function isLuckyWinner(){
     const h = new Date().getHours();
-    const offPeak = (h < 16 || h >= 22); // قبل 4م أو بعد 10م
-    const p = offPeak ? 0.10 : 0.05;     // 10% خارج الذروة، 5% داخلها
+    const offPeak = (h < 16 || h >= 22);
+    const p = offPeak ? 0.10 : 0.05;
     return Math.random() < p;
   }
 
   function luckyReward(){
     const rewards = [
-      { ar: "🎉 LUCKY WINNER: شوت قهوة أو إضافة مجانية اليوم.", en: "🎉 LUCKY WINNER: free coffee shot or add-on today." },
+      { ar: "🎉 LUCKY WINNER: إضافة مجانية اليوم.", en: "🎉 LUCKY WINNER: a free add-on today." },
       { ar: "🎉 LUCKY WINNER: خصم 20% على منتج واحد (غير قابل للجمع).", en: "🎉 LUCKY WINNER: 20% off one item (not stackable)." },
       { ar: "🎉 LUCKY WINNER: حلوى اليوم (حسب المتاح).", en: "🎉 LUCKY WINNER: dessert of the day (subject to availability)." }
     ];
@@ -519,9 +597,8 @@
   }
 
   function stampsFromVisits(v){
-    // 12 ختم ثم تعيد (لكن الزيارات تظل تتراكم)
-    const s = v % 12;
-    return s === 0 && v > 0 ? 12 : s;
+    const s = v % STAMP_CYCLE;
+    return s === 0 && v > 0 ? STAMP_CYCLE : s;
   }
 
   function formatLastSeen(ts){
@@ -538,7 +615,6 @@
   }
 
   function hashCode(str){
-    // simple deterministic hash
     let h = 0;
     for(let i=0;i<str.length;i++){
       h = (h<<5) - h + str.charCodeAt(i);
@@ -547,6 +623,7 @@
     return Math.abs(h);
   }
 
+  // كود كاشير ثابت في نفس اليوم
   function makeCashierCode(profile){
     const now = new Date();
     const dayKey = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
@@ -591,9 +668,8 @@
   }
 
   function renderTicket(profile){
-    // Visual fields
     document.getElementById("displayName").innerText = profile.name;
-    document.getElementById("refCode").innerText = `ROYAL-${profile.id.slice(0,4)}${profile.id.slice(-2)}`;
+    document.getElementById("refCode").innerText = `LANO-${profile.id.slice(0,4)}${profile.id.slice(-2)}`;
     document.getElementById("statusText").innerText = "CONFIRMED";
     document.getElementById("lastSeen").innerText = formatLastSeen(profile.lastSeen);
 
@@ -604,16 +680,13 @@
     document.getElementById("stampsChip").innerText = stamps;
     document.getElementById("tierChip").innerText = tier;
 
-    // Stub refresh
-    const stub = document.getElementById("stubText");
-    stub.innerText = `№ ${profile.id.slice(0,4)}-${String(profile.visits).padStart(2,"0")} • ADMIT ONE`;
+    fillStampDots(stamps);
 
-    // Header changes (premium feel)
-    const headline = document.getElementById("headline");
-    headline.innerText = (tier === "DIAMOND") ? "ROYAL LEGEND" : "ROYAL MEMBER";
+    document.getElementById("stubText").innerText =
+      `№ ${profile.id.slice(0,4)}-${String(profile.visits).padStart(2,"0")} • ADMIT ONE`;
 
-    const subhead = document.getElementById("subhead");
-    subhead.innerText = (tier === "DIAMOND") ? "EXCLUSIVE PRIVILEGE GRANTED" : "GRAND WINTER GALA 2025";
+    document.getElementById("headline").innerText = (tier === "DIAMOND") ? "ROYAL LEGEND" : "ROYAL MEMBER";
+    document.getElementById("subhead").innerText = (tier === "DIAMOND") ? "EXCLUSIVE PRIVILEGE GRANTED" : "LANO WINTER EDITION";
   }
 
   function shouldCountVisit(profile){
@@ -634,8 +707,8 @@
       profile.visits = (profile.visits || 0) + 1;
       profile.lastScanAt = now;
       profile.totalScans = (profile.totalScans || 0) + 1;
+      profile.lastVisitCountedAt = now;
     }else{
-      // still track scans but not visits
       profile.totalScans = (profile.totalScans || 0) + 1;
     }
 
@@ -658,53 +731,37 @@
       createdAt: Date.now(),
       lastSeen: null,
       lastScanAt: null,
+      lastNameChangeAt: Date.now(),
       totalScans: 0
     };
 
     saveProfile(profile);
     hideSetup();
-
     renderTicket(profile);
     activateTicket();
   }
 
-  function demoGuest(){
-    const profile = {
-      id: "GUEST" + randomId(6),
-      name: "Guest",
-      visits: 0,
-      createdAt: Date.now(),
-      lastSeen: null,
-      lastScanAt: null,
-      totalScans: 0,
-      _demo: true
-    };
-    // لا نحفظ الضيف
-    document.getElementById("setup").style.display = "none";
-    renderTicket(profile);
-    activateTicket();
-    window.__demoProfile = profile;
-  }
-
-  function resetIdentity(){
-    localStorage.removeItem(STORAGE_KEY);
-    location.reload();
+  function canChangeName(profile){
+    if(!profile.lastNameChangeAt) return true;
+    const diffMs = Date.now() - profile.lastNameChangeAt;
+    const diffDays = diffMs / (1000*60*60*24);
+    return diffDays >= NAME_CHANGE_COOLDOWN_DAYS;
   }
 
   function editName(){
     const p = loadProfile();
-    if(!p){
-      // demo
-      const newName = prompt("اكتب اسمك:", "Guest");
-      if(newName && newName.trim()){
-        window.__demoProfile.name = newName.trim();
-        renderTicket(window.__demoProfile);
-      }
+    if(!p) return;
+
+    if(!canChangeName(p)){
+      const remaining = Math.ceil(NAME_CHANGE_COOLDOWN_DAYS - ((Date.now() - p.lastNameChangeAt) / (1000*60*60*24)));
+      alert(`يمكنك تغيير الاسم بعد ${remaining} يوم/أيام.`);
       return;
     }
+
     const newName = prompt("اكتب اسمك:", p.name);
     if(newName && newName.trim()){
       p.name = newName.trim();
+      p.lastNameChangeAt = Date.now();
       saveProfile(p);
       renderTicket(p);
     }
@@ -714,20 +771,16 @@
     const outer = document.getElementById("mainTicket");
     outer.classList.add("opened");
 
-    // load profile
-    let profile = loadProfile();
+    const profile = loadProfile();
     if(!profile){
-      // demo fallback
-      profile = window.__demoProfile || { id: randomId(8), name: "Guest", visits: 0 };
-    }else{
-      // apply scan (visit increment with cooldown)
-      applyScan(profile);
+      outer.classList.remove("opened");
+      showSetup();
+      return;
     }
 
-    // refresh UI
+    const { counted } = applyScan(profile);
     renderTicket(profile);
 
-    // Build reveal content
     const tier = tierFromVisits(profile.visits);
     const stamps = stampsFromVisits(profile.visits);
     const stage = stageMessages(profile.visits);
@@ -736,29 +789,30 @@
     document.getElementById("enMsg").innerText = stage.en;
 
     document.getElementById("kpiVisits").innerText = profile.visits;
-    document.getElementById("kpiStamps").innerText = `${stamps}/12`;
+    document.getElementById("kpiStamps").innerText = `${stamps}/${STAMP_CYCLE}`;
     document.getElementById("kpiTier").innerText = tier;
 
-    // Reward logic: milestone OR lucky winner
     const rewardBox = document.getElementById("rewardBox");
     rewardBox.style.display = "none";
     rewardBox.innerText = "";
 
     let reward = milestoneReward(profile.visits);
-
-    // Lucky Winner (if no milestone, or even alongside it—اختياري)
     if(!reward && isLuckyWinner()){
       reward = luckyReward();
     }
-
     if(reward){
       rewardBox.style.display = "block";
       rewardBox.innerText = reward.ar + "\n" + reward.en;
     }
 
-    // Cashier code (daily-ish)
-    const code = makeCashierCode(profile);
-    document.getElementById("cashierCode").innerText = `CODE: ${code}`;
+    // إشعار بسيط داخلي ضمن الكود (يظهر فقط كرسالة تحت المكافأة لو تحب)
+    if(!counted){
+      // ما نضيف عنصر جديد للواجهة حفاظاً على الفخامة، لكن نقدر نعرض تنبيه خفيف:
+      // rewardBox.style.display = "block";
+      // rewardBox.innerText = "⏳ تم تسجيل حضورك، وستُحتسب زيارة جديدة بعد فترة.\nYour scan is recorded. A new visit will count later.";
+    }
+
+    document.getElementById("cashierCode").innerText = `CODE: ${makeCashierCode(profile)}`;
   }
 
   function closeTicket(){
