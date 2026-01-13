@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>LANO | Royal Identity</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,11 +12,16 @@
   <style>
     :root {
       --gold-foil: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-      --lano-burgundy: #6f1d1b;        /* أحمر غامق */
-      --lano-burgundy-2: #3b0f10;      /* أغمق للخلفيات */
-      --paper-color: #f2e6d0;          /* بيج */
-      --vintage-red: #8b1f24;          /* خطوط/تفاصيل */
+      --lano-burgundy: #6f1d1b;
+      --lano-burgundy-2: #3b0f10;
+      --paper-color: #f2e6d0;
+      --vintage-red: #8b1f24;
       --ink: #1b1b1b;
+
+      /* Mobile-safe sizing */
+      --safe-pad: max(16px, env(safe-area-inset-left));
+      --safe-top: max(16px, env(safe-area-inset-top));
+      --safe-bottom: max(16px, env(safe-area-inset-bottom));
     }
 
     * { box-sizing: border-box; }
@@ -32,6 +37,7 @@
       overflow: hidden;
       perspective: 1000px;
       color: var(--paper-color);
+      padding: var(--safe-top) var(--safe-pad) var(--safe-bottom);
     }
 
     /* شاشة الإصدار */
@@ -42,7 +48,7 @@
       background: rgba(59, 15, 16, 0.92);
       padding: 44px 46px;
       border: 1px solid #bf953f;
-      border-radius: 2px;
+      border-radius: 10px;
       box-shadow: 0 0 100px rgba(0,0,0,0.8);
       transition: 0.8s;
       width: min(540px, calc(100% - 28px));
@@ -98,18 +104,20 @@
       font-size: 12px;
       transition: 0.25s;
       letter-spacing: 2px;
+      border-radius: 10px;
     }
     .btn:hover { background: #bf953f; color: #120607; transform: translateY(-1px); }
 
     /* --- التذكرة --- */
     .ticket-outer {
-      width: 90%;
-      max-width: 880px;
+      width: min(920px, 100%);
+      max-width: 920px;
       aspect-ratio: 2.1 / 1;
       position: relative;
       opacity: 0;
       transform: rotateY(20deg) rotateX(10deg) translateY(50px);
       transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      touch-action: manipulation;
     }
     .ticket-outer.active { opacity: 1; transform: rotateY(0) rotateX(0) translateY(0); }
 
@@ -118,7 +126,7 @@
       height: 100%;
       background-color: var(--paper-color);
       background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-      border-radius: 10px;
+      border-radius: 14px;
       box-shadow: 0 40px 80px rgba(0,0,0,0.7);
       display: flex;
       position: relative;
@@ -157,6 +165,7 @@
       z-index: 6;
       text-align:center;
       padding: 10px 0;
+      user-select: none;
     }
 
     .ticket-main {
@@ -181,7 +190,7 @@
       text-transform: uppercase;
     }
 
-    .center-content { text-align: center; }
+    .center-content { text-align: center; width: 100%; }
     .center-content span { font-family: 'Cinzel'; font-size: 10px; color: #2a0a0b; opacity: 0.65; }
     .name-display {
       font-family: 'Great Vibes', cursive;
@@ -189,6 +198,7 @@
       color: #2a0a0b;
       margin: 4px 0 2px;
       filter: drop-shadow(1px 1px 0px white);
+      line-height: 1.05;
     }
 
     .meta-row{
@@ -196,28 +206,29 @@
       gap:10px;
       justify-content:center;
       flex-wrap:wrap;
-      margin-top: 6px;
+      margin-top: 8px;
     }
     .chip{
       border:1px solid rgba(42,10,11,0.18);
-      background: rgba(255,255,255,0.55);
-      padding: 6px 10px;
+      background: rgba(255,255,255,0.65);
+      padding: 7px 11px;
       border-radius: 999px;
       font-family: 'Cinzel';
       font-size: 10px;
       letter-spacing: 1px;
       color: rgba(42,10,11,0.85);
+      user-select: none;
     }
     .chip b{ color: #2a0a0b; }
 
     /* ختم بصري */
     .stamp-track{
-      margin-top: 10px;
+      margin-top: 12px;
       display:flex;
       gap:7px;
       justify-content:center;
       flex-wrap:wrap;
-      max-width: 420px;
+      max-width: 520px;
       padding: 0 8px;
     }
     .dot{
@@ -246,15 +257,17 @@
     .barcode-section {
       text-align: center;
       cursor: pointer;
-      padding: 8px 10px;
+      padding: 10px 12px;
       transition: 0.25s;
       user-select: none;
+      border-radius: 12px;
+      -webkit-tap-highlight-color: transparent;
     }
-    .barcode-section:hover { transform: translateY(-4px); }
+    .barcode-section:active { transform: translateY(-2px) scale(0.99); }
 
     .barcode-img {
-      width: 190px;
-      height: 46px;
+      width: 200px;
+      height: 50px;
       background: #000;
       mask: repeating-linear-gradient(90deg, #000 0, #000 2px, transparent 2px, transparent 6px);
       -webkit-mask: repeating-linear-gradient(90deg, #000 0, #000 2px, transparent 2px, transparent 6px);
@@ -271,20 +284,23 @@
       font-size: 10px;
       letter-spacing: 1px;
       color: rgba(0,0,0,0.55);
+      user-select: none;
     }
 
     .mini-btn{
       background:none;
       border: 1px solid rgba(191,149,63,0.7);
       color: rgba(42,10,11,0.85);
-      padding: 6px 10px;
+      padding: 7px 10px;
       cursor:pointer;
       font-family:'Cinzel';
       font-size:9px;
       letter-spacing: 1px;
       transition: .2s;
+      border-radius: 10px;
+      -webkit-tap-highlight-color: transparent;
     }
-    .mini-btn:hover{ background: rgba(191,149,63,0.18); transform: translateY(-1px); }
+    .mini-btn:active{ transform: translateY(-1px); background: rgba(191,149,63,0.18); }
 
     /* --- طبقة الكشف --- */
     .reveal-overlay {
@@ -298,7 +314,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 34px;
+      padding: 20px;
       text-align: center;
       border: 8px solid #bf953f;
       color: var(--paper-color);
@@ -307,10 +323,11 @@
 
     .panel{
       border: 1px solid rgba(191,149,63,0.92);
-      padding: 26px 24px;
+      padding: 24px 18px;
       width: 100%;
       background: rgba(0,0,0,0.14);
       backdrop-filter: blur(4px);
+      max-width: 620px;
     }
 
     .msg-ar { font-size: 22px; line-height: 1.9; margin: 0 0 14px; font-weight: 700; }
@@ -358,6 +375,7 @@
       font-size: 12px;
       color: rgba(252,246,186,0.98);
       user-select: all;
+      word-break: break-word;
     }
 
     .close-btn {
@@ -365,14 +383,16 @@
       background: none;
       border: 1px solid #bf953f;
       color: #bf953f;
-      padding: 9px 18px;
+      padding: 10px 18px;
       cursor: pointer;
       font-family: 'Cinzel';
       font-size: 10px;
       transition: 0.25s;
       letter-spacing: 2px;
+      border-radius: 12px;
+      width: min(240px, 90%);
     }
-    .close-btn:hover { background: #bf953f; color: #120607; }
+    .close-btn:active { background: #bf953f; color: #120607; }
 
     /* ختم */
     .seal-gold {
@@ -396,16 +416,122 @@
       color:#120607;
     }
 
+    /* ==========================================================
+       MOBILE: تحويل التذكرة إلى وضع عمودي واضح + تكبير كل شيء
+       ========================================================== */
     @media (max-width: 720px){
-      .ticket-main{ padding: 20px 18px; }
-      .name-display{ font-size: 52px; }
-      .header-box h1{ font-size: 30px; }
-      .ticket-stub{ width: 92px; font-size: 11px; }
-      .barcode-img{ width: 170px; }
+      body{
+        overflow: auto;
+        perspective: none; /* مهم: 3D على الجوال يخرّب القراءة */
+      }
+
+      #setup{
+        padding: 28px 18px;
+        border-radius: 14px;
+      }
+      .input-style{ font-size: 28px; }
+
+      .ticket-outer{
+        width: 100%;
+        max-width: 440px;
+        aspect-ratio: auto;
+        transform: translateY(18px);
+      }
+
+      .ticket-body{
+        flex-direction: column; /* أهم تغيير */
+        border-radius: 18px;
+      }
+
+      .ticket-body::before{
+        border-width: 10px;
+      }
+
+      .ticket-stub{
+        width: 100%;
+        height: 54px;
+        writing-mode: horizontal-tb;
+        border-left: none;
+        border-bottom: 3px dashed rgba(255,255,255,0.14);
+        letter-spacing: 3px;
+        font-size: 11px;
+        padding: 0 10px;
+      }
+
+      .ticket-main{
+        padding: 18px 16px 16px;
+        gap: 12px;
+      }
+
+      .header-box h1{ font-size: 28px; }
+      .header-box p{ font-size: 11px; letter-spacing: 4px; }
+
+      .name-display{
+        font-size: 56px; /* واضح على الجوال */
+        margin-top: 6px;
+      }
+
+      .meta-row{
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .chip{
+        font-size: 11px;
+        padding: 9px 12px;
+      }
+
+      .stamp-track{
+        max-width: 100%;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .dot{ width: 12px; height: 12px; }
+
+      .footer-row{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding-top: 14px;
+      }
+
+      .barcode-section{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+        background: rgba(191,149,63,0.12);
+        border: 1px solid rgba(191,149,63,0.28);
+      }
+
+      .barcode-img{
+        width: min(320px, 92%);
+        height: 58px; /* أكبر = أوضح */
+      }
+
+      .seal-gold{
+        width: 64px;
+        height: 64px;
+        top: 12px;
+        right: 12px;
+        transform: rotate(-18deg);
+      }
+
+      .reveal-overlay{
+        padding: 16px;
+        border-width: 6px;
+      }
+
+      .panel{
+        padding: 18px 14px;
+      }
+
+      .msg-ar{ font-size: 20px; }
       .kpi{ grid-template-columns: 1fr; }
+      .close-btn{ font-size: 11px; }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Setup -->
@@ -466,7 +592,7 @@
 
           <div class="barcode-section" onclick="openTicket()">
             <div class="barcode-img"></div>
-            <div style="font-size: 9px; margin-top: 6px; color: var(--vintage-red); font-weight: bold; letter-spacing: 1px;">
+            <div style="font-size: 9px; margin-top: 8px; color: var(--vintage-red); font-weight: bold; letter-spacing: 1px;">
               TAP TO REVEAL TODAY’S ROYAL SEAL
             </div>
           </div>
@@ -512,9 +638,9 @@
   // =========================
   // LANO Royal Identity (LocalStorage)
   // =========================
-  const STORAGE_KEY = "lano_royal_identity_v3"; // نسخة جديدة
-  const VISIT_COOLDOWN_HOURS = 4;               // لا يزيد الزيارة إلا بعد 4 ساعات
-  const NAME_CHANGE_COOLDOWN_DAYS = 30;         // تغيير الاسم مرة كل 30 يوم (تطوير)
+  const STORAGE_KEY = "lano_royal_identity_v3";
+  const VISIT_COOLDOWN_HOURS = 4;
+  const NAME_CHANGE_COOLDOWN_DAYS = 30;
   const STAMP_CYCLE = 12;
 
   // ---- Visual stamps init
@@ -537,7 +663,6 @@
     });
   }
 
-  // رسائل حسب مراحل الزيارة
   function stageMessages(visits){
     if (visits <= 1) return {
       ar: "مرحبًا بك في LANO… اليوم بدأت هويتك الملكية معنا ✨",
@@ -561,7 +686,6 @@
     };
   }
 
-  // مكافآت على محطات (عدّلها حسب هامش الربح)
   function milestoneReward(visits){
     const map = {
       3:  { ar: "🎖️ مكافأة: إضافة (صوص/توبنق) مجانًا اليوم.", en: "🎖️ Reward: a free add-on today." },
@@ -572,7 +696,6 @@
     return map[visits] || null;
   }
 
-  // Lucky Winner probability
   function isLuckyWinner(){
     const h = new Date().getHours();
     const offPeak = (h < 16 || h >= 22);
@@ -623,7 +746,6 @@
     return Math.abs(h);
   }
 
-  // كود كاشير ثابت في نفس اليوم
   function makeCashierCode(profile){
     const now = new Date();
     const dayKey = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
@@ -664,7 +786,7 @@
   function activateTicket(){
     setTimeout(() => {
       document.getElementById("mainTicket").classList.add("active");
-    }, 350);
+    }, 250);
   }
 
   function renderTicket(profile){
@@ -716,7 +838,6 @@
     return { counted };
   }
 
-  // ========= Actions =========
   function issueIdentity(){
     const name = (document.getElementById("userName").value || "").trim();
     if(!name){
@@ -745,7 +866,7 @@
     if(!profile.lastNameChangeAt) return true;
     const diffMs = Date.now() - profile.lastNameChangeAt;
     const diffDays = diffMs / (1000*60*60*24);
-    return diffDays >= NAME_CHANGE_COOLDOWN_DAYS;
+    return diffDays >= 30;
   }
 
   function editName(){
@@ -753,7 +874,7 @@
     if(!p) return;
 
     if(!canChangeName(p)){
-      const remaining = Math.ceil(NAME_CHANGE_COOLDOWN_DAYS - ((Date.now() - p.lastNameChangeAt) / (1000*60*60*24)));
+      const remaining = Math.ceil(30 - ((Date.now() - p.lastNameChangeAt) / (1000*60*60*24)));
       alert(`يمكنك تغيير الاسم بعد ${remaining} يوم/أيام.`);
       return;
     }
@@ -789,7 +910,7 @@
     document.getElementById("enMsg").innerText = stage.en;
 
     document.getElementById("kpiVisits").innerText = profile.visits;
-    document.getElementById("kpiStamps").innerText = `${stamps}/${STAMP_CYCLE}`;
+    document.getElementById("kpiStamps").innerText = `${stamps}/${12}`;
     document.getElementById("kpiTier").innerText = tier;
 
     const rewardBox = document.getElementById("rewardBox");
@@ -805,13 +926,6 @@
       rewardBox.innerText = reward.ar + "\n" + reward.en;
     }
 
-    // إشعار بسيط داخلي ضمن الكود (يظهر فقط كرسالة تحت المكافأة لو تحب)
-    if(!counted){
-      // ما نضيف عنصر جديد للواجهة حفاظاً على الفخامة، لكن نقدر نعرض تنبيه خفيف:
-      // rewardBox.style.display = "block";
-      // rewardBox.innerText = "⏳ تم تسجيل حضورك، وستُحتسب زيارة جديدة بعد فترة.\nYour scan is recorded. A new visit will count later.";
-    }
-
     document.getElementById("cashierCode").innerText = `CODE: ${makeCashierCode(profile)}`;
   }
 
@@ -819,7 +933,6 @@
     document.getElementById("mainTicket").classList.remove("opened");
   }
 
-  // ========= Boot =========
   (function init(){
     const profile = loadProfile();
     if(profile){
@@ -834,3 +947,4 @@
 
 </body>
 </html>
+
